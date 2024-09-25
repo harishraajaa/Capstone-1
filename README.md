@@ -1,1 +1,3 @@
-# Online Event Management Platform - Backend-
+# Online Event Management Platform - Backend
+
+Deployed URL : https://harishevents.onrender.com
