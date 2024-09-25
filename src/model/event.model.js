@@ -41,6 +41,11 @@ const eventSchema = new mongoose.Schema({
         default:[],
         required:[true,"Location is required"]
     },
+    price:{
+        type:Object,
+        default:[],
+        required:[true,"Price is required"]
+    },
     updatedBy:{
         type:String
     },

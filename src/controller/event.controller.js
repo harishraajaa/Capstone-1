@@ -10,7 +10,7 @@ const query = {
         as:"EventAuthor"
     },
     projectApprovedEvents:{_id:0,id:1,title:1,image:1,description:1,date:1,time:1,createdAt:1,location:1,authorName:"$EventAuthor.name"},
-    projectAllEvents:{_id:0,title:1,category:1,date:1,time:1,createdAt:1,authorName:"$EventAuthor.name",status:1}
+    projectAllEvents:{_id:0,id:1,title:1,category:1,date:1,time:1,location:1,createdAt:1,authorName:"$EventAuthor.name",status:1}
 }
 
 const createEvent = async(req,res)=>{
@@ -175,14 +175,19 @@ const updateStatus = async(req,res)=>{
 
         if(event)
         {
-            event.status = req.body.status ?? "false"
+            if(event.status===true){
+                res.status(200).send({
+                    message:`Event status already Approved`
+                })
+            }
+            else{
+                event.status = req.body.status ?? "In-Active"
             event.updatedBy = userId
-
             await event.save()
-
             res.status(200).send({
-                message:`Event status updated as ${req.body.status} ?? false`
+                message:`Event status updated as ${req.body.status}`
             })
+            }
         }
         else
         {

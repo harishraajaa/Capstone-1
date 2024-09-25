@@ -108,5 +108,7 @@ const buyEvent = async(req,userId)=>{
 
   }
 }
+  
+
 
   export default {createOrder,paymentSucess,verifyPayment}
