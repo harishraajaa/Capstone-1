@@ -11,6 +11,7 @@ router.get('/getEventsByUserId',verifyAuth,eventController.getEventsByUserId)
 router.get('/getAllApprovedEvents',verifyAuth,eventController.getAllApprovedEvents)
 router.post('/createEvent',verifyAuth,verifyAdmin,eventController.createEvent)
 router.put('/updateStatus/:eventId',verifyAuth,verifyAdmin,eventController.updateStatus)
+router.put('/updateOrder/:orderId',verifyAuth,eventController.updateOrder)
 router.post('/buyEvent/:eventId',verifyAuth,eventController.buyEvent)
 // router.put('/updateLikes/:eventId',verifyAuth,eventController.updateLikes)
 

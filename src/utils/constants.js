@@ -17,7 +17,8 @@ export const CATEGORY_ENUM ={
 
 export const ORDER_STATUS_ENUM ={
     BOOKED:"Booked",
-    NOTBOOKED:"Not Booked"
+    NOTBOOKED:"Not Booked",
+    CANCELLED:"Cancelled"
 }
 
 export const PAYMENT_STATUS_ENUM ={

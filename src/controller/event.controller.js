@@ -10,7 +10,7 @@ const query = {
         as:"EventAuthor"
     },
     projectApprovedEvents:{_id:0,id:1,title:1,image:1,description:1,date:1,time:1,createdAt:1,location:1,authorName:"$EventAuthor.name"},
-    projectAllEvents:{_id:0,id:1,title:1,image:1,description:1,date:1,time:1,createdAt:1,authorName:"$EventAuthor.name",status:1}
+    projectAllEvents:{_id:0,title:1,category:1,date:1,time:1,createdAt:1,authorName:"$EventAuthor.name",status:1}
 }
 
 const createEvent = async(req,res)=>{
@@ -61,7 +61,7 @@ const getAllEvents = async(req,res)=>{
             {$sort:{createdAt:-1}}
         ])
         res.status(200).send({
-            message:"Blogs Fetched Successfully",
+            message:"All Events Fetched Successfully",
             data:events
         })
     } catch (error) {
@@ -118,6 +118,7 @@ const getEventsByUserId = async(req,res)=>{
             {   
                 $project:{
                     _id : 0,
+                    id:1,
                     eventId : 1,
                     Event_Title : "$myorders.title",
                     Event_Date:"$myorders.date",
@@ -197,6 +198,42 @@ const updateStatus = async(req,res)=>{
         })
     }
 }
+const updateOrder = async(req,res)=>{
+    try {
+        let {orderId} = req.params
+        //let {userId} = req.headers
+        let order = await orderModel.findOne({id:orderId})
+
+        if(order)
+        {
+            if(order.status==='Cancelled'){
+                res.status(400).send({
+                    message:`Order already Cancelled`
+                })
+            }
+            else{
+               
+                order.status = req.body.status ?? "Booked"
+            await order.save()
+            res.status(200).send({
+                message:`Order status updated as ${req.body.status}`
+            })
+            }
+        }
+        else
+        {
+            res.status(400).send({
+                message:"Invalid Order Id"
+            })
+        }
+    } catch (error) {
+        console.error(`Error Occoured at ${req.originalUrl} - ${error}`)
+        res.status(500).send({
+            message: error.message || "Internal Server Error",
+            error
+        })
+    }
+}
 
 const updateLikes = async(req,res)=>{
     try {
@@ -240,5 +277,6 @@ export default {
     getAllApprovedEvents,
     updateStatus,
     updateLikes,
-    buyEvent
+    buyEvent,
+    updateOrder
 }

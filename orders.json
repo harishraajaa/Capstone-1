@@ -109,5 +109,13 @@
     "receipt": "receipt#1",
     "status": "paid",
     "payment_id": "pay_P150SlsSaEYGFO"
+  },
+  {
+    "order_id": "order_P1IJJYktbDjV6B",
+    "amount": 49900,
+    "currency": "INR",
+    "receipt": "receipt#1",
+    "status": "paid",
+    "payment_id": "pay_P1IJQrC2lSvn9o"
   }
 ]
