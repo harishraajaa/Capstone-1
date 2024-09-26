@@ -9,8 +9,8 @@ const query = {
         foreignField:"id",
         as:"EventAuthor"
     },
-    projectApprovedEvents:{_id:0,id:1,title:1,image:1,description:1,date:1,time:1,createdAt:1,location:1,authorName:"$EventAuthor.name"},
-    projectAllEvents:{_id:0,id:1,title:1,category:1,date:1,time:1,location:1,createdAt:1,authorName:"$EventAuthor.name",status:1}
+    projectApprovedEvents:{_id:0,id:1,title:1,image:1,price:1,description:1,date:1,time:1,createdAt:1,location:1,authorName:"$EventAuthor.name"},
+    projectAllEvents:{_id:0,id:1,title:1,category:1,price:1,date:1,time:1,location:1,createdAt:1,authorName:"$EventAuthor.name",status:1}
 }
 
 const createEvent = async(req,res)=>{
@@ -72,6 +72,7 @@ const getAllEvents = async(req,res)=>{
         })
     }
 }
+
 
 const getEventById = async(req,res)=>{
     try {
@@ -152,10 +153,33 @@ const getAllApprovedEvents = async(req,res)=>{
             {$lookup:query.lookupUsers},
             {$unwind:"$EventAuthor"},
             {$project:query.projectApprovedEvents},
-            {$sort:{createdAt:-1}}
+            {$sort:{createdAt:1}}
         ])
         res.status(200).send({
             message:"Events Fetched Successfully",
+            data:events
+        })
+    } catch (error) {
+        console.error(`Error Occoured at ${req.originalUrl} - ${error}`)
+        res.status(500).send({
+            message: error.message || "Internal Server Error",
+            error
+        })
+    }
+}
+
+const getAllApprovedEventsByCategory = async(req,res)=>{
+    const {category}=req.body
+    try {
+        let events = await eventModel.aggregate([
+            {$lookup:query.lookupUsers},
+            {$match:{category:category}},
+            {$unwind:"$EventAuthor"},
+            {$project:query.projectApprovedEvents},
+            {$sort:{createdAt:1}}
+        ])
+        res.status(200).send({
+            message:"All Events Fetched Successfully",
             data:events
         })
     } catch (error) {
@@ -283,5 +307,6 @@ export default {
     updateStatus,
     updateLikes,
     buyEvent,
-    updateOrder
+    updateOrder,
+    getAllApprovedEventsByCategory
 }

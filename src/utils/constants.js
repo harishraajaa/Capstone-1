@@ -12,7 +12,7 @@ export const BLOG_STATUS_ENUM = {
 export const CATEGORY_ENUM ={
     COMEDY:"Comedy",
     MUSIC:"Music",
-    WORKSHOP:"Workshop"
+    WORKSHOP:"Workshops"
 }
 
 export const ORDER_STATUS_ENUM ={
