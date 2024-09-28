@@ -146,6 +146,94 @@ const getEventsByUserId = async(req,res)=>{
     }
 }
 
+const getEventsByAdmin = async(req,res)=>{
+    try {
+        let {userId} = req.headers
+        //console.log(req.headers)
+        let orders = await orderModel.aggregate([
+            {$lookup:{
+                from:"events",
+                localField:"eventId",
+                foreignField:"id",
+                as:"myorders"
+            }},
+            {$unwind:"$myorders"},
+            {   
+                $project:{
+                    _id : 0,
+                    id:1,
+                    title : "$myorders.title",
+                    category:"$myorders.category",
+                    totalamount:1,
+                    tickets:1,
+                    
+                } 
+            },
+            {$sort:{title:1}}
+        ])
+        let musictotal=0
+        let comedytotal=0
+        let workshoptotal=0
+        let workshoptickets=0
+        let musictickets=0
+        let comedytickets=0
+        let result=[]
+        orders.map((e)=>{
+            
+            if (e.category==="Music"){
+                musictotal=musictotal+e.totalamount
+                for(let i in e.tickets)
+                {
+                    musictickets=musictickets+e.tickets[i]
+                }
+            }
+            if(e.category==="Comedy"){
+                comedytotal=comedytotal+e.totalamount
+                for(let i in e.tickets)
+                {
+                    comedytickets=comedytickets+e.tickets[i]
+                }
+            }
+            if(e.category==="Workshops"){
+                workshoptotal=workshoptotal+e.totalamount
+                for(let i in e.tickets)
+                {
+                    workshoptickets=workshoptickets+e.tickets[i]
+                }
+            }
+        })
+
+        result.push({
+            "category":"Music",
+            "totalamount":musictotal,
+            "totaltickets":musictickets
+        },
+        {
+            "category":"Comedy",
+            "totalamount":comedytotal,
+            "totaltickets":comedytickets
+
+        },
+        {
+            "category":"Workshops",
+            "totalamount":workshoptotal,
+            "totaltickets":workshoptickets
+
+        })
+
+        res.status(200).send({
+            message:"Event Fetched Successfully",
+            data:result
+        })
+    } catch (error) {
+        console.error(`Error Occoured at ${req.originalUrl} - ${error}`)
+        res.status(500).send({
+            message: error.message || "Internal Server Error",
+            error
+        })
+    }
+}
+
 const getAllApprovedEvents = async(req,res)=>{
     try {
         let events = await eventModel.aggregate([
@@ -308,5 +396,6 @@ export default {
     updateLikes,
     buyEvent,
     updateOrder,
-    getAllApprovedEventsByCategory
+    getAllApprovedEventsByCategory,
+    getEventsByAdmin
 }
