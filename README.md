@@ -1,3 +1,3 @@
 # Event Management Tool - Harish Events
 
-Deployed URL:
+<b>Deployed URL:</b> https://harishevents.netlify.app/
