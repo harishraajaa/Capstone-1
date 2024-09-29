@@ -508,7 +508,8 @@ const sendEmail = async (user,event,amount) => {
   
 const sendOrderEmail=async(req,res)=>{
     try {
-        let order = await orderModel.findOne({notified:"no"})
+        let {userId}=req.body
+        let order = await orderModel.findOne({notified:"no",userId:userId})
         if(order)
         {   order.notified="yes"
             await order.save()
