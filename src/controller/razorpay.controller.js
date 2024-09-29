@@ -5,6 +5,7 @@ import orderModel from "../model/order.model.js";
 import Config from '../utils/config.js'
 
 
+
 const razorpay = new Razorpay({
     key_id: Config.razorpay_key_id,
     key_secret: Config.razorpay_key_secret,
@@ -84,7 +85,7 @@ const verifyPayment=async(req,res)=>{
           order.status = 'paid';
           order.payment_id = razorpay_payment_id;
           writeData(orders);
-          buyEvent(requestbody,userId)
+          buyEvent(requestbody,userId)  
         }
         console.log("Payment verification successful")
         res.status(201).json({ status: 'ok'});
@@ -100,15 +101,12 @@ const verifyPayment=async(req,res)=>{
 
 const buyEvent = async(req,userId)=>{
   try {
-      //console.log("calling")
       await orderModel.create({...req,userId})
-      //let order= await orderModel.findOne({userId:userId,paymentstatus:'Not Paid'})
   } catch (error) {
       console.error(`Error Occoured at buyEvent Function`)
 
   }
 }
-  
 
 
   export default {createOrder,paymentSucess,verifyPayment}

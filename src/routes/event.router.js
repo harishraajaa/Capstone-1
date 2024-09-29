@@ -15,6 +15,7 @@ router.post('/createEvent',verifyAuth,verifyAdmin,eventController.createEvent)
 router.put('/updateStatus/:eventId',verifyAuth,verifyAdmin,eventController.updateStatus)
 router.put('/updateOrder/:orderId',verifyAuth,eventController.updateOrder)
 router.post('/buyEvent/:eventId',verifyAuth,eventController.buyEvent)
+router.get('/sendOrderEmail',verifyAuth,eventController.sendOrderEmail)
 // router.put('/updateLikes/:eventId',verifyAuth,eventController.updateLikes)
 
 export default router

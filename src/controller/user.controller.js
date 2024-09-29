@@ -33,6 +33,77 @@ const sendEmail = async (user, token, hostname) => {
             text: "Hello world?", // plain text body
             html: `<b>Hi ${user.name},</b><br><br><p><b>Link for Password reset: </b>${hostname}/resetpassword/${token}</p>
             <br><br><p><b>Note:</b> Link will be valid for next 5 minutes.</p>`, // html body
+//             html:`<html lang="en">
+// <head>
+//     <meta charset="UTF-8">
+//     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+//     <title>Email Template</title>
+//     <style>
+//         body {
+//             margin: 0;
+//             padding: 0;
+//             background-color: #f4f4f4;
+//             font-family: Arial, sans-serif;
+//         }
+//         .container {
+//             width: 100%;
+//             max-width: 600px;
+//             margin: auto;
+//             background: #ffffff;
+//             border-radius: 5px;
+//             overflow: hidden;
+//         }
+//         .header {
+//             background: #007bff;
+//             padding: 20px;
+//             color: white;
+//             text-align: center;
+//         }
+//         .content {
+//             padding: 20px;
+//         }
+//         .footer {
+//             background: #f4f4f4;
+//             padding: 10px;
+//             text-align: center;
+//             font-size: 12px;
+//             color: #777;
+//         }
+//         a {
+//             color: #007bff;
+//             text-decoration: none;
+//         }
+//         @media only screen and (max-width: 600px) {
+//             .container {
+//                 width: 100%;
+//             }
+//         }
+//     </style>
+// </head>
+// <body>
+//     <div class="container">
+//         <div class="header">
+//             <h1>Welcome to Our Newsletter</h1>
+//         </div>
+//         <div class="content">
+//             <h2>Hello, [Recipient's Name]!</h2>
+//             <p>Thank you for subscribing to our newsletter. We’re excited to have you on board!</p>
+//             <p>Here’s what you can expect in our upcoming editions:</p>
+//             <ul>
+//                 <li>Latest updates and news</li>
+//                 <li>Exclusive offers and promotions</li>
+//                 <li>Helpful tips and resources</li>
+//             </ul>
+//             <p>If you have any questions, feel free to <a href="mailto:support@example.com">contact us</a>.</p>
+//             <p>Best regards,<br>Your Company Team</p>
+//         </div>
+//         <div class="footer">
+//             <p>&copy; 2024 Your Company. All rights reserved.</p>
+//             <p><a href="#">Unsubscribe</a></p>
+//         </div>
+//     </div>
+// </body>
+//             </html>`
         });
 
 

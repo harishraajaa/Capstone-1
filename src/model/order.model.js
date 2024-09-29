@@ -29,6 +29,11 @@ const orderSchema = new mongoose.Schema({
         },
         required:[true,"status is required"]
     },
+    notified:{
+        type:String,
+        required:[true,"status is required"],
+        default:"no"
+    },
     paymentstatus:{
         type:String,
         enum:{

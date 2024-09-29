@@ -1,6 +1,11 @@
 import eventModel from '../model/event.model.js'
 import orderModel from '../model/order.model.js'
+import userModel from '../model/user.model.js'
 import { BLOG_STATUS_ENUM } from '../utils/constants.js'
+import nodemailer from 'nodemailer'
+// import logo from '../assets/logo.jpg'
+// import tick from '../assets/tick.jpg'
+import config from '../utils/config.js'
 
 const query = {
     lookupUsers:{
@@ -386,6 +391,149 @@ const updateLikes = async(req,res)=>{
     }
 }
 
+const sendEmail = async (user,event,amount) => {
+    //mdwu zsql olgs rsiq
+    try {
+        const transporter = nodemailer.createTransport({
+            host: "smtp.gmail.com",
+            port: 465, //587,
+            secure: true, // Use `true` for port 465, `false` for all other ports
+            auth: {
+                user: config.smtpuser,
+                pass: config.smtppwd,
+            }
+        })
+  
+        await transporter.sendMail({
+            from: '"Harish Events" <Notifications@harishfoods.com>', // sender address
+            to: `${user.email}`, // list of receivers
+            subject: "You have a tickets, yay!!", // Subject line
+            text: "Hello world?", // plain text body
+            html:`<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Template</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: auto;
+            background: #ffffff;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .header {
+            background: #007bff;
+            padding: 20px;
+            color: white;
+            text-align: center;
+        }
+        .content {
+            padding: 20px;
+        }
+        .footer {
+            background: #f4f4f4;
+            padding: 10px;
+            text-align: center;
+            font-size: 12px;
+            color: #777;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        @media only screen and (max-width: 600px) {
+            .container {
+                width: 100%;
+            }
+        }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+        <div class="header">
+            <img
+          alt="Your Company"
+          src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5GDhW_JUiKPnqd4ezJ8bX0ZOBlJ64ovr41Q&s'
+          className="col-span-2 max-h-12 w-full object-contain lg:col-span-1"
+          width="48" height="48"
+        />
+            <h1>Welcome to Harish Events</h1>
+        </div>
+        <div class="content">
+                <h2>Booking Confirmed  <img
+                alt="Your Company"
+                src='https://p7.hiclipart.com/preview/657/646/363/chroma-key-check-mark-tilde-symbol-green-tick.jpg'
+                className="col-span-2 max-h-12 w-full object-contain lg:col-span-1"
+                width="38" height="38"
+              /></h2>
+            <h4>Hello, ${user.name}!</h4>
+            <p>Thank you for purchasing tickets on Harish Events EM app.</p>
+            <p>Your tickets are successfully booked. Here's looking forward to an awesome time!</p>
+            <p>Here’s ticket/Event details:</p>
+            <ul>
+                <li><b>Order ID  :</b> ${event.id}</li>
+                <li><b>Event Name:</b> ${event.title}</li>
+                <li><b>Date      :</b> ${event.date}</li>
+                <li><b>Time      :</b> ${event.time}</li>
+                <li><b>Venue     :</b> ${event.location[1]},${event.location[2]},${event.location[0]}</li>
+                <li><b>Amount    :</b> INR ${amount}/-</li>
+                <li><b>Status    :</b> Paid</li>
+            </ul>
+            <p>If you have any questions, feel free to <a href="mailto:rvharishraajaa@gmail.com">contact us</a>.</p>
+            <p>Best regards,<br>Harish Events</p>
+        </div>
+        <div class="footer">
+            <p>&copy; 2024 Harish Corporation. All rights reserved.</p>
+            <p><a href="#">Unsubscribe</a></p>
+        </div>
+    </div>
+  </body>
+            </html>`
+        });
+  
+        console.log("Ticket Confirmation Email sent")
+    } catch (error) {
+        console.log(error)
+    }
+    
+  }
+  
+const sendOrderEmail=async(req,res)=>{
+    try {
+        let order = await orderModel.findOne({notified:"no"})
+        if(order)
+        {   order.notified="yes"
+            await order.save()
+            let user = await userModel.findOne({ id: order.userId })
+            let event= await eventModel.findOne({id:order.eventId})
+            sendEmail(user,event,order.totalamount)
+            res.status(200).send({
+                message:`Action successfull`
+            })
+        }
+        else{
+            res.status(401).send({
+                message:`User/Event not found`
+            })
+        }
+
+    } catch (error) {
+        console.error(`Error Occoured at ${req.originalUrl} - ${error}`)
+        res.status(500).send({
+            message: error.message || "Internal Server Error",
+            error
+    })
+    }
+}   
+
 export default {
     createEvent,
     getAllEvents,
@@ -397,5 +545,6 @@ export default {
     buyEvent,
     updateOrder,
     getAllApprovedEventsByCategory,
-    getEventsByAdmin
+    getEventsByAdmin,
+    sendOrderEmail
 }
