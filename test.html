@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Template</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: auto;
+            background: #ffffff;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .header {
+            background: #00a2ff;
+            padding: 20px;
+            color: rgb(21, 19, 19);
+            text-align: center;
+        }
+        .content {
+            padding: 20px;
+        }
+        .footer {
+            background: #f4f4f4;
+            padding: 10px;
+            text-align: center;
+            font-size: 12px;
+            color: #777;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        @media only screen and (max-width: 600px) {
+            .container {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+        <img
+          alt="Your Company"
+          src='/Users/harishraajaarv/Desktop/My Space/Code/Projects/Event_Mgt_Tool/EMT_Frontend/src/assets/logo.png'
+          className="col-span-2 max-h-12 w-full object-contain lg:col-span-1"
+          width="48" height="48"
+        />
+            <h1>Welcome to Harish Events</h1>
+        </div>
+        <div class="content">
+            <h2>Booking Confirmed  <img
+                alt="Your Company"
+                src='/Users/harishraajaarv/Desktop/My Space/Code/Projects/Event_Mgt_Tool/EMT_Frontend/src/assets/tick.png'
+                className="col-span-2 max-h-12 w-full object-contain lg:col-span-1"
+                width="38" height="38"
+              /></h2>
+            <h4>Hello, [Recipient's Name]!</h4>
+            <p>Thank you for purchasing tickets on Harish Events EM app.</p>
+            <p>Your tickets are successfully booked. Here's looking forward to an awesome time!</p>
+            <p>Here’s ticket/Event details:</p>
+            <ul>
+                <li>Latest updates and news</li>
+                <li>Exclusive offers and promotions</li>
+                <li>Helpful tips and resources</li>
+            </ul>
+            <p>If you have any questions, feel free to <a href="mailto:support@example.com">contact us</a>.</p>
+            <p>Best regards,<br>Your Company Team</p>
+        </div>
+        <div class="footer">
+            <p>&copy; 2024 Your Company. All rights reserved.</p>
+            <p><a href="#">Unsubscribe</a></p>
+        </div>
+    </div>
+</body>
+</html>
