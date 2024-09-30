@@ -13,6 +13,10 @@
 
 1. Razopay (Test Mode)
 
+### Screenshots
+
+![/Users/harishraajaarv/Desktop/My Space/Code/Projects/Event_Mgt_Tool/EMT_Frontend/src/assets/Login.png]
+
 ### User Functionalities:-
 
 1. Sign-up
