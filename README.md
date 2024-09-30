@@ -15,7 +15,7 @@
 
 ### Screenshots
 
-![Login_Page](assets/Login.png)
+![Login_Page](src/assets/Login.png)
 
 ### User Functionalities:-
 
