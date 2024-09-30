@@ -15,7 +15,7 @@
 
 ### Screenshots
 
-![/Users/harishraajaarv/Desktop/My Space/Code/Projects/Event_Mgt_Tool/EMT_Frontend/src/assets/Login.png]
+![Login_Page](assets/Login.png)
 
 ### User Functionalities:-
 
