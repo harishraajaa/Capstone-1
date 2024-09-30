@@ -19,10 +19,10 @@ Login Page-
 ![Login_Page](src/assets/Login.png)
 
 User Home Page-
-![User_Home](src/assets/User Home View.png)
+![User_Home](src/assets/User_Home.png)
 
 Admin Home Page-
-![Admin_Home](src/assets/Admin Home View.png)
+![Admin_Home](src/assets/Admin_Home.png)
 
 ### User Functionalities:-
 
