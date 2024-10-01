@@ -36,6 +36,10 @@ Admin Home Page-
 
 ### Admin Functionalities:-
 
+Admin Login Details:
+UserName: admin@gmail.com
+Password: 123
+
 1. Sign-up
 2. Login
 3. Account activation
