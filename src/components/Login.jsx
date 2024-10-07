@@ -1,22 +1,25 @@
-import React from 'react'
+import React,{useState} from 'react'
 import logo from '../../src/assets/logo.png'
 import api from '../service/apiService'
 import ApiRoutes from '../utils/ApiRoutes'
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
-
-
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
+import Fade from '@mui/material/Fade';
 
 
 function Login() {
 
   const navigate = useNavigate()
+  const [loading, setLoading] = useState(false)
   const handleLogin = async (e) => {
     e.preventDefault()
     try {
       const formData = new FormData(e.currentTarget)
       const data = {}
+      setLoading(true)
       for (let [key, value] of formData.entries())
         data[key] = value
 
@@ -107,6 +110,17 @@ function Login() {
           Not a member?{' '}
           <Link to='/signup' className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500" >Sign-Up Here!!</Link>
         </p>
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <Fade
+          in={loading}
+          style={{
+            transitionDelay: loading ? '500ms' : '0ms',
+          }}
+          unmountOnExit
+        >
+          <CircularProgress />
+        </Fade>
+      </Box>
       </div>
     </div>
   </>

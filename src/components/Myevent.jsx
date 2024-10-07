@@ -6,10 +6,14 @@ import apiService from '../service/apiService'
 import ApiRoutes from '../utils/ApiRoutes'
 import { Button } from 'react-bootstrap'
 import toast from 'react-hot-toast'
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
+import Fade from '@mui/material/Fade';
 
 function Myevent() {
 
   let [data, setdata] = useState([])
+  const [loading, setLoading] = useState(true)
   let logout = useLogout()
 
   const getEvent = async () => {
@@ -21,6 +25,7 @@ function Myevent() {
       })
 
       setdata(response.data)
+      setLoading(false)
 
     } catch (error) {
       toast.error(error.response.data.message)
@@ -33,7 +38,7 @@ function Myevent() {
         console.log("Email Sending!!!")
         let userId=sessionStorage.getItem('id')
         const data={userId}
-        console.log(data)
+        //console.log(data)
         let { SEND_TICKET_EMAIL } = ApiRoutes
         try {
 
@@ -84,6 +89,17 @@ function Myevent() {
 
   return <>
     <NavBar />
+    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <Fade
+          in={loading}
+          style={{
+            transitionDelay: loading ? '500ms' : '0ms',
+          }}
+          unmountOnExit
+        >
+          <CircularProgress />
+        </Fade>
+      </Box>
     <p className='mt-3 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900'>Manage your Orders</p>
     <p className='container mt-3 text-right text-l font-bold leading-9 tracking-tight text-gray-900'>Present your e-tickets upon entry.</p>
     <div className='container mt-5'>
