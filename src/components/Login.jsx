@@ -37,6 +37,7 @@ function Login() {
 
     } catch (error) {
       toast.error(error.response.data.message)
+      setLoading(false)
     }
   }
 
@@ -110,7 +111,7 @@ function Login() {
           Not a member?{' '}
           <Link to='/signup' className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500" >Sign-Up Here!!</Link>
         </p>
-        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '10px' }}>
         <Fade
           in={loading}
           style={{
