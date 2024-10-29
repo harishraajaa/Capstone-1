@@ -89,6 +89,8 @@ function Myevent() {
 
   return <>
     <NavBar />
+    <p className='mt-3 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900'>Manage your Orders</p>
+    <p className='container mt-3 text-right text-l font-bold leading-9 tracking-tight text-gray-900'>Present your e-tickets upon entry.</p>
     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <Fade
           in={loading}
@@ -100,8 +102,6 @@ function Myevent() {
           <CircularProgress />
         </Fade>
       </Box>
-    <p className='mt-3 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900'>Manage your Orders</p>
-    <p className='container mt-3 text-right text-l font-bold leading-9 tracking-tight text-gray-900'>Present your e-tickets upon entry.</p>
     <div className='container mt-5'>
     <Table striped bordered hover>
       <thead>

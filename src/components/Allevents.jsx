@@ -4,11 +4,14 @@ import { Table } from 'react-bootstrap'
 import apiService from '../service/apiService'
 import ApiRoutes from '../utils/ApiRoutes'
 import toast from 'react-hot-toast'
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
+import Fade from '@mui/material/Fade';
 
 function Allevents() {
 
     let [data, setdata] = useState([])
-
+    const [loading, setLoading] = useState(true)
     
     const getAllEvent = async () => {
       let { GET_ALL_EVENTS } = ApiRoutes
@@ -19,7 +22,8 @@ function Allevents() {
         })
   
         setdata(response.data)
-  
+        setLoading(false)
+        
       } catch (error) {
         toast.error(error.response.data.message)
         console.log(error.response.data.message)
@@ -36,7 +40,6 @@ function Allevents() {
         let response = await apiService.put(`${ApiRoutes.UPDATE_STATUS.path}/${eventId}`,body, {
           authenticate: ApiRoutes.UPDATE_STATUS.authenticate
         })
-  
           toast.success(response.message)
           getAllEvent()
       } catch (error) {
@@ -55,6 +58,17 @@ function Allevents() {
   <NavBar /> 
     <p className='mt-3 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900'>Manage All Events</p>
     {/* <p className='container mt-3 text-right text-l font-bold leading-9 tracking-tight text-gray-900'>Present your e-tickets upon entry.</p> */}
+    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <Fade
+          in={loading}
+          style={{
+            transitionDelay: loading ? '500ms' : '0ms',
+          }}
+          unmountOnExit
+        >
+          <CircularProgress />
+        </Fade>
+      </Box>
     <div className='container mt-5'>
     <Table striped bordered hover>
       <thead>
